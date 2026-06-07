@@ -866,13 +866,13 @@ function utility.getclipboard(release_ctrl)
     task.wait() -- yield one frame to let focus register
     
     if not is_synX then
-        keypress(Enum.KeyCode.LeftControl)
-        keypress(Enum.KeyCode.V)
+        keypress(0x11) -- LeftControl
+        keypress(0x56) -- V
         task.wait()
-        keyrelease(Enum.KeyCode.V)
+        keyrelease(0x56)
 
         if release_ctrl then
-            keyrelease(Enum.KeyCode.LeftControl)
+            keyrelease(0x11)
         end
     else
         keypress(0x11)
