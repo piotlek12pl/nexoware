@@ -859,12 +859,16 @@ function utility.getclipboard(release_ctrl)
         services.UserInputService.WindowFocused:Wait()
     end
     
+    library.paste_textbox.Text = ""
     library.paste_textbox.Parent = services.CoreGui
     library.paste_textbox:CaptureFocus()
+    
+    task.wait() -- yield one frame to let focus register
     
     if not is_synX then
         keypress(Enum.KeyCode.LeftControl)
         keypress(Enum.KeyCode.V)
+        task.wait()
         keyrelease(Enum.KeyCode.V)
 
         if release_ctrl then
@@ -873,6 +877,7 @@ function utility.getclipboard(release_ctrl)
     else
         keypress(0x11)
         keypress(0x56)
+        task.wait()
         keyrelease(0x56)
 
         if release_ctrl then
@@ -880,9 +885,21 @@ function utility.getclipboard(release_ctrl)
         end
     end
     
-    library.paste_textbox:GetPropertyChangedSignal("Text"):Wait()
+    -- Wait for paste with timeout
+    local pasted = false
+    local conn
+    conn = library.paste_textbox:GetPropertyChangedSignal("Text"):Connect(function()
+        pasted = true
+    end)
+    
+    local start = os.clock()
+    while not pasted and (os.clock() - start) < 1 do
+        task.wait()
+    end
+    conn:Disconnect()
     
     local clipboard = library.paste_textbox.Text
+    library.paste_textbox.Text = ""
     library.paste_textbox.Parent = nil
     
     return clipboard
