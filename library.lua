@@ -865,24 +865,14 @@ function utility.getclipboard(release_ctrl)
     
     task.wait() -- yield one frame to let focus register
     
-    if not is_synX then
-        keypress(0x11) -- LeftControl
-        keypress(0x56) -- V
-        task.wait()
-        keyrelease(0x56)
+    -- Simulate Ctrl+V on the hidden textbox
+    keypress(0x11) -- LeftControl
+    keypress(0x56) -- V
+    task.wait()
+    keyrelease(0x56)
 
-        if release_ctrl then
-            keyrelease(0x11)
-        end
-    else
-        keypress(0x11)
-        keypress(0x56)
-        task.wait()
-        keyrelease(0x56)
-
-        if release_ctrl then
-            keyrelease(0x11)
-        end
+    if release_ctrl then
+        keyrelease(0x11)
     end
     
     -- Wait for paste with timeout
@@ -899,6 +889,13 @@ function utility.getclipboard(release_ctrl)
     conn:Disconnect()
     
     local clipboard = library.paste_textbox.Text
+    -- Deduplicate: if pasted twice (native + simulated), take half
+    if #clipboard > 0 and #clipboard % 2 == 0 then
+        local half = clipboard:sub(1, #clipboard / 2)
+        if half .. half == clipboard then
+            clipboard = half
+        end
+    end
     library.paste_textbox.Text = ""
     library.paste_textbox.Parent = nil
     
