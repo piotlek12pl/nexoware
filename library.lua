@@ -5263,6 +5263,8 @@ function library:Load(options)
             callback = function()
                 if library:CreateConfig(library.flags["config_name"]) and not config_dropdown:Exists(library.flags["config_name"]) then
                     config_dropdown:Add(library.flags["config_name"])
+                    -- Auto-zaznacz nowo utworzony config (zeby Save Config dzialal od razu)
+                    pcall(function() config_dropdown:Set(library.flags["config_name"]) end)
                     library:Notify{title = "Configuration", message = ("Successfully created config '%s'"):format(library.flags["config_name"]), duration = 5}
                 end
             end
