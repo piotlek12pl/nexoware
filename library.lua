@@ -4612,10 +4612,10 @@ function library:Load(options)
     utility.format(options)
 
     utility.defaults(options, {
-        title = options.name or "exodus",
+        title = options.name or "nexohub",
         theme = "Default",
         overrides = {},
-        folder = "exodus",
+        folder = "nexohub",
         extension = "json",
         game = "universal",
         tweenspeed = options.animspeed or 0.1,
