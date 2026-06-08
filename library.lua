@@ -3286,7 +3286,7 @@ function library:Loader(options)
     utility.format(options);
 
     utility.defaults(options, {
-        title = "nexohub",
+        title = "Exodus",
         description = "Loading...",
         percentage = 50,
         date = "16/01/22",
@@ -4612,10 +4612,10 @@ function library:Load(options)
     utility.format(options)
 
     utility.defaults(options, {
-        title = options.name or "nexohub",
+        title = options.name or "exodus",
         theme = "Default",
         overrides = {},
-        folder = "nexohub",
+        folder = "exodus",
         extension = "json",
         game = "universal",
         tweenspeed = options.animspeed or 0.1,
@@ -5225,7 +5225,7 @@ function library:Load(options)
     function window_types:SettingsTab(watermark, unload)
         unload = unload or function() library.unload(library) end
 
-        local settings = self:Tab("settings")
+        local settings = self:Tab("Settings")
         local configs = settings:Section{name = "Configs"}
         local autoload
 
