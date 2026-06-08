@@ -4615,7 +4615,7 @@ function library:Load(options)
         title = options.name or "nexohub",
         theme = "Default",
         overrides = {},
-        folder = "exodus",
+        folder = "nexohub",
         extension = "json",
         game = "universal",
         tweenspeed = options.animspeed or 0.1,
