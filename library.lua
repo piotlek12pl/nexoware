@@ -3286,7 +3286,7 @@ function library:Loader(options)
     utility.format(options);
 
     utility.defaults(options, {
-        title = "Exodus",
+        title = "nexohub",
         description = "Loading...",
         percentage = 50,
         date = "16/01/22",
@@ -5225,7 +5225,7 @@ function library:Load(options)
     function window_types:SettingsTab(watermark, unload)
         unload = unload or function() library.unload(library) end
 
-        local settings = self:Tab("Settings")
+        local settings = self:Tab("settings")
         local configs = settings:Section{name = "Configs"}
         local autoload
 
